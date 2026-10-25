@@ -2,6 +2,8 @@
 
 PIC16F877A के RB0 pin पर लगी LED को 1 Hz पर blink करता है (500 ms चालू, 500 ms बंद)।
 
+RB1 पर लगा बटन दबाने से blinking रुक जाती है (LED बंद), दोबारा दबाने पर फिर शुरू हो जाती है।
+
 ## Hardware (वायरिंग)
 
 | कनेक्शन | विवरण |
@@ -11,6 +13,7 @@ PIC16F877A के RB0 pin पर लगी LED को 1 Hz पर blink कर�
 | MCLR (pin 1) | 10 kΩ resistor से +5 V |
 | OSC1/OSC2 (pin 13, 14) | 20 MHz crystal, दोनों pin से GND तक 22 pF capacitor |
 | RB0 (pin 33) | 330 Ω resistor → LED का anode (+), LED का cathode (−) → GND |
+| RB1 (pin 34) | Push button → GND (internal pull-up चालू है, बाहरी resistor ज़रूरी नहीं) |
 
 Chip के पास VDD और VSS के बीच 100 nF capacitor लगाएँ।
 
@@ -33,4 +36,6 @@ simulation के लिए Proteus/SimulIDE में load करें।
 ## Crystal या LED pin बदलना
 
 - दूसरा crystal: `main.c` में `_XTAL_FREQ` बदलें (4 MHz या कम के crystal के लिए `FOSC = XT` लिखें)।
-- दूसरा pin: `LED_TRIS` और `LED` define बदलें, जैसे `TRISDbits.TRISD0` / `PORTDbits.RD0`।
+- दूसरा LED pin: `LED_TRIS` और `LED` define बदलें, जैसे `TRISDbits.TRISD0` / `PORTDbits.RD0`।
+- दूसरा बटन pin: `BTN_TRIS` और `BTN` define बदलें। Internal pull-up सिर्फ़ PORTB पर है, इसलिए
+  किसी और port पर बटन लगाएँ तो pin से +5 V तक 10 kΩ resistor लगाएँ।
