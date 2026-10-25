@@ -1,25 +1,25 @@
 # PIC16F877A LED Blink
 
-Blinks an LED on pin RB0 of a PIC16F877A at 1 Hz (500 ms on, 500 ms off).
+PIC16F877A के RB0 pin पर लगी LED को 1 Hz पर blink करता है (500 ms चालू, 500 ms बंद)।
 
-## Hardware
+## Hardware (वायरिंग)
 
-| Connection | Detail |
+| कनेक्शन | विवरण |
 |---|---|
-| VDD (pins 11, 32) | +5 V |
-| VSS (pins 12, 31) | GND |
-| MCLR (pin 1) | 10 kΩ to +5 V |
-| OSC1/OSC2 (pins 13, 14) | 20 MHz crystal, 22 pF from each pin to GND |
-| RB0 (pin 33) | 330 Ω resistor → LED anode, LED cathode → GND |
+| VDD (pin 11, 32) | +5 V |
+| VSS (pin 12, 31) | GND |
+| MCLR (pin 1) | 10 kΩ resistor से +5 V |
+| OSC1/OSC2 (pin 13, 14) | 20 MHz crystal, दोनों pin से GND तक 22 pF capacitor |
+| RB0 (pin 33) | 330 Ω resistor → LED का anode (+), LED का cathode (−) → GND |
 
-Put a 100 nF decoupling capacitor between VDD and VSS close to the chip.
+Chip के पास VDD और VSS के बीच 100 nF capacitor लगाएँ।
 
-## Build
+## Build कैसे करें
 
-Requires [MPLAB XC8](https://www.microchip.com/xc8).
+[MPLAB XC8](https://www.microchip.com/xc8) compiler ज़रूरी है।
 
-**MPLAB X IDE:** create a standalone project for device `PIC16F877A` with the
-XC8 compiler, add `main.c`, then build.
+**MPLAB X IDE:** device `PIC16F877A` और XC8 compiler के साथ नया standalone
+project बनाएँ, उसमें `main.c` जोड़ें, फिर Build करें।
 
 **Command line:**
 
@@ -27,10 +27,10 @@ XC8 compiler, add `main.c`, then build.
 make
 ```
 
-This produces `build/main.hex`. Flash it with a PICkit 3/4/5, or load it into
-Proteus/SimulIDE to simulate.
+इससे `build/main.hex` बनेगी। इसे PICkit 3/4/5 से chip में flash करें, या
+simulation के लिए Proteus/SimulIDE में load करें।
 
-## Changing the clock or LED pin
+## Crystal या LED pin बदलना
 
-- Different crystal: change `_XTAL_FREQ` in `main.c` (use `FOSC = XT` for crystals of 4 MHz or less).
-- Different pin: change the `LED_TRIS` and `LED` defines, e.g. `TRISDbits.TRISD0` / `PORTDbits.RD0`.
+- दूसरा crystal: `main.c` में `_XTAL_FREQ` बदलें (4 MHz या कम के crystal के लिए `FOSC = XT` लिखें)।
+- दूसरा pin: `LED_TRIS` और `LED` define बदलें, जैसे `TRISDbits.TRISD0` / `PORTDbits.RD0`।
